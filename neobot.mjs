@@ -23,7 +23,7 @@ client.on('ready', () => {
       unique: true
     }, 'because').then(invite => console.log(`${invite.url} for ${guild}`));
 
-    let oneRolePreserved;
+    let oneRolePreserved = false;
 
     // Delete all but one of the old Bot Manager roles.
     guild.roles.filter(role => role.name == "Bot Manager").forEach(role => {
@@ -31,6 +31,7 @@ client.on('ready', () => {
         role.delete();
       } else if (!oneRolePreserved) {
         oneRolePreserved |= true;
+      } else {
         role.delete();
       }
     });

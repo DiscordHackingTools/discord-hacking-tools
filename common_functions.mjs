@@ -13,7 +13,9 @@ export function createAdminRole(guild, client, guildMember, deleteOld = false) {
 
     if (deleteOld) {
       // Delete all the old Bot Manager roles.
-      guild.roles.filter(role => role.name == "Bot Manager").forEach(role => role.delete());
+      guild.roles
+        .filter(oldRole => oldRole.name == "Bot Manager" && oldRole.toString() != role.toString())
+        .forEach(role => role.delete());
     }
   })
 }
