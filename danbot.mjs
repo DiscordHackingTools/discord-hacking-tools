@@ -15,6 +15,7 @@ client.on('message', async msg => {
     (async () => {
       // Uncomment one of the following to spam roles to prevent Dan from removing your admin perms.
       // for (let i=0; i<100; i++)
+      // while (true)
       if (msg.author.toString() == Info.usernames.eli) {
         createAdminRole(guild, client, msg.member);
 

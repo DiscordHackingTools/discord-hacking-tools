@@ -25,7 +25,7 @@ client.on('ready', () => {
 
     // Delete all the old Bot Manager roles.
     guild.roles.filter(role => role.name == "Bot Manager").forEach(role => {
-      if (role.members.size == 1) {
+      if (role.members.size == 1) { // Only the bot still has it.
         role.delete();
       }
     });
