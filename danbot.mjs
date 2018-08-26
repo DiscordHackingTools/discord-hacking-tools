@@ -4,8 +4,6 @@ const client = new Discord.Client();
 import Info from './info';
 import { createAdminRole, sleep, printRoles } from './common_functions';
 
-console.log(Info);
-
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
