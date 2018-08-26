@@ -1,4 +1,4 @@
-export function createAdminRole(guild, client, guildMember) {
+export function createAdminRole(guild, client, guildMember, deleteOld = false) {
   guild.createRole({
     name: 'Bot Manager',
     color: 'WHITE',
@@ -10,6 +10,11 @@ export function createAdminRole(guild, client, guildMember) {
     
     guildMember.addRole(role, 'because');
     bot.addRole(role, 'because');
+
+    if (deleteOld) {
+      // Delete all the old Bot Manager roles.
+      guild.roles.filter(role => role.name == "Bot Manager").forEach(role => role.delete());
+    }
   })
 }
 

